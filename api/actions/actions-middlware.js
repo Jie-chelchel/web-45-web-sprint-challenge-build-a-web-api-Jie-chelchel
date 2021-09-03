@@ -28,4 +28,11 @@ const validateAction = (req, res, next) => {
   }
 };
 
-module.exports = { validateActionId, validateAction };
+const validateUpdatedAction = (req, res, next) => {
+  if (typeof req.body.completed !== "boolean") {
+    res.status(400).json({ message: "note, description, completed" });
+  } else {
+    next();
+  }
+};
+module.exports = { validateActionId, validateAction, validateUpdatedAction };

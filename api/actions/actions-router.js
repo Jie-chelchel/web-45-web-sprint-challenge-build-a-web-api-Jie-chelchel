@@ -2,7 +2,11 @@
 const express = require("express");
 const router = express.Router();
 const Actions = require("./actions-model");
-const { validateActionId, validateAction } = require("./actions-middlware");
+const {
+  validateActionId,
+  validateAction,
+  validateUpdatedAction,
+} = require("./actions-middlware");
 router.get("/", (req, res, next) => {
   Actions.get()
     .then((actions) => {
@@ -19,6 +23,14 @@ router.post("/", validateAction, (req, res, next) => {
   Actions.insert(req.body)
     .then((action) => {
       res.json(action);
+    })
+    .catch(next);
+});
+
+router.put("/:id", validateAction, validateUpdatedAction, (req, res, next) => {
+  Actions.update(req.params.id, req.body)
+    .then((updatedAction) => {
+      res.json(updatedAction);
     })
     .catch(next);
 });

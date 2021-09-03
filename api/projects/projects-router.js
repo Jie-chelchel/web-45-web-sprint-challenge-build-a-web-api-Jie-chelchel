@@ -44,6 +44,16 @@ router.put(
   }
 );
 
+router.delete("/:id", validateProjectId, (req, res, next) => {
+  Projects.remove(req.params.id)
+    .then((record) => {
+      if (record === 1) {
+        return res.json(req.project);
+      }
+    })
+    .catch(next);
+});
+
 //eslint-disable-next-line
 router.use((err, req, res, next) => {
   res.status(err.status || 500).json({

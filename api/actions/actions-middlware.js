@@ -14,5 +14,18 @@ const validateActionId = (req, res, next) => {
     })
     .catch(next);
 };
+const validateAction = (req, res, next) => {
+  if (
+    !req.body.description ||
+    !req.body.description.trim() ||
+    !req.body.notes ||
+    !req.body.notes.trim() ||
+    !req.body.project_id
+  ) {
+    res.status(400).json({ message: "note, description" });
+  } else {
+    next();
+  }
+};
 
-module.exports = { validateActionId };
+module.exports = { validateActionId, validateAction };

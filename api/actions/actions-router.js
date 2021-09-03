@@ -2,7 +2,7 @@
 const express = require("express");
 const router = express.Router();
 const Actions = require("./actions-model");
-const { validateActionId } = require("./actions-middlware");
+const { validateActionId, validateAction } = require("./actions-middlware");
 router.get("/", (req, res, next) => {
   Actions.get()
     .then((actions) => {
@@ -13,6 +13,14 @@ router.get("/", (req, res, next) => {
 
 router.get("/:id", validateActionId, (req, res) => {
   res.json(req.action);
+});
+
+router.post("/", validateAction, (req, res, next) => {
+  Actions.insert(req.body)
+    .then((action) => {
+      res.json(action);
+    })
+    .catch(next);
 });
 
 //eslint-disable-next-line

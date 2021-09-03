@@ -19,9 +19,7 @@ const validateProjectId = (req, res, next) => {
         res.status(404).json({ message: "project id is not found" });
       }
     })
-    .catch((err) => {
-      next(err);
-    });
+    .catch(next);
 };
 
 const validateProject = (req, res, next) => {

@@ -35,14 +35,8 @@ const validateProject = (req, res, next) => {
   }
 };
 
-const validateUpdatedProject = (req, res, next) => {
-  if (
-    !req.body.name ||
-    !req.body.name.trim() ||
-    !req.body.description ||
-    !req.body.description.trim() ||
-    typeof req.body.completed !== "boolean"
-  ) {
+const validateCompletedKey = (req, res, next) => {
+  if (typeof req.body.completed !== "boolean") {
     res.status(400).json({ message: "name, description, completed" });
   } else {
     next();
@@ -52,6 +46,6 @@ const validateUpdatedProject = (req, res, next) => {
 module.exports = {
   logger,
   validateProjectId,
-  validateUpdatedProject,
+  validateCompletedKey,
   validateProject,
 };

@@ -1,11 +1,10 @@
-// Write your "actions" router here!
 const express = require("express");
 const router = express.Router();
 const Actions = require("./actions-model");
 const {
   validateActionId,
   validateAction,
-  validateUpdatedAction,
+  validateCompletedKey,
 } = require("./actions-middlware");
 router.get("/", (req, res, next) => {
   Actions.get()
@@ -27,10 +26,22 @@ router.post("/", validateAction, (req, res, next) => {
     .catch(next);
 });
 
-router.put("/:id", validateAction, validateUpdatedAction, (req, res, next) => {
+router.put("/:id", validateAction, validateCompletedKey, (req, res, next) => {
   Actions.update(req.params.id, req.body)
     .then((updatedAction) => {
       res.json(updatedAction);
+    })
+    .catch(next);
+});
+
+router.delete("/:id", validateActionId, (req, res, next) => {
+  Actions.remove(req.params.id)
+    .then((record) => {
+      if (record === 1) {
+        res.json(req.action);
+      } else {
+        next();
+      }
     })
     .catch(next);
 });

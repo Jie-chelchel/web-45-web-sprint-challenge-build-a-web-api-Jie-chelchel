@@ -14,6 +14,7 @@ const validateActionId = (req, res, next) => {
     })
     .catch(next);
 };
+
 const validateAction = (req, res, next) => {
   if (
     !req.body.description ||
@@ -28,11 +29,12 @@ const validateAction = (req, res, next) => {
   }
 };
 
-const validateUpdatedAction = (req, res, next) => {
+const validateCompletedKey = (req, res, next) => {
   if (typeof req.body.completed !== "boolean") {
     res.status(400).json({ message: "note, description, completed" });
   } else {
     next();
   }
 };
-module.exports = { validateActionId, validateAction, validateUpdatedAction };
+
+module.exports = { validateActionId, validateAction, validateCompletedKey };

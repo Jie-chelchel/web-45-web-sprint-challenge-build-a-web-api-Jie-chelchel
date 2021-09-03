@@ -4,7 +4,7 @@ const router = express.Router();
 const {
   validateProjectId,
   validateProject,
-  validateUpdatedProject,
+  validateCompletedKey,
 } = require("./projects-middleware");
 
 router.get("/", (req, res, next) => {
@@ -32,7 +32,8 @@ router.post("/", validateProject, (req, res, next) => {
 router.put(
   "/:id",
   validateProjectId,
-  validateUpdatedProject,
+  validateProject,
+  validateCompletedKey,
   (req, res, next) => {
     Projects.update(req.params.id, req.body)
       .then((updatedProject) => {
@@ -67,4 +68,5 @@ router.use((err, req, res, next) => {
     stack: err.stack,
   });
 });
+
 module.exports = router;
